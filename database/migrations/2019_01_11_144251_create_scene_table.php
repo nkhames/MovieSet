@@ -13,7 +13,7 @@ class CreateSceneTable extends Migration
      */
     public function up()
     {
-        Schema::create('Scenes', function (Blueprint $table) {
+        Schema::create('scenes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('movie_title');
             $table->string('scene_title');
@@ -33,6 +33,6 @@ class CreateSceneTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Scenes');
+        Schema::dropIfExists('scenes');
     }
 }
