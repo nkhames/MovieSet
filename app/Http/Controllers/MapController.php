@@ -84,7 +84,7 @@ class MapController extends Controller
        ); 
          
        $userid = Auth::user()->id;
-       $ids = DB::table('Photoscin')->select('photo_path', 'scene_id')->where('user_id', '=', $userid)->get()->toArray();
+       $ids = DB::table('photoscin')->select('photo_path', 'scene_id')->where('user_id', '=', $userid)->get()->toArray();
        $ids = json_decode(json_encode($ids), true);
        $photo = array();
        foreach($ids as $ide){
