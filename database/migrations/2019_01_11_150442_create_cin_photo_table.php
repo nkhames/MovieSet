@@ -23,7 +23,7 @@ class CreateCinPhotoTable extends Migration
 
         Schema::table('PhotosCin', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('scene_id')->references('id')->on('Scenes')->onDelete('cascade');
+            $table->foreign('scene_id')->references('id')->on('scenes')->onDelete('cascade');
         });
     }
 
