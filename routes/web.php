@@ -24,8 +24,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/test', function () {
     return view('base');
 });
-Route::post('/create','LocInsertCtrl@insert')->name('create');;
+Route::post('/create','LocInsertCtrl@insert')->name('create');
 Route::get('insert','LocInsertCtrl@insertform');
+
+Route::get('proposer','AnnonceCtrl@getform');
+Route::post('/insert','AnnonceCtrl@insert')->name('insert');
+Route::get('api/tags', 'Api\TagsController@index');
 
 Auth::routes();
 
@@ -39,9 +43,18 @@ Route::get('/CreateTruc', function () {
     return view('testslider');
 });
 
+Route::get('/Contact', function () {
+    return view('contact');
+});
+
+Route::get('/AboutUs', function () {
+    return view('About_us');
+});
+
 Route::get('/hashtag',function(){
     return view('hashtag');
 });
+
 
 Route::get('api/tags', 'Api\TagsController@index');
 

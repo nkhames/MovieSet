@@ -5,7 +5,7 @@
 namespace App;
 
 
-class TagQueue
+class tagqueue
 {
     private $tags = [];
 

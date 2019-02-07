@@ -24,6 +24,8 @@ class LocInsertCtrl extends Controller
         $lat = $request->input('lat');
         $long = $request->input('long');
         if( $request->hasFile('photo') ) {
+
+        $allowedfileExtension=['pdf','jpg','png'];
          $photo_name = $title.'_'.$scene;
          
          $request->file('photo')->move(public_path('images'),$photo_name ); // save photo in public

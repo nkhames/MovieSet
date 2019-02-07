@@ -28,10 +28,11 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel border-bottom ">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    MovieSet
+                    <img class="img-fluid" src="{{ asset('\custom\logo.png')}}"  alt="logo">
+                   
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -48,12 +49,6 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/test') }}">{{ __('Scenes de films') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/test') }}">{{ __('Trouver un lieu de tournage') }}</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
@@ -62,8 +57,19 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                     Trouver un lieux<span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}">{{ __('Scènes de film') }}</a>
+                                </div>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}">{{ __('Scènes de film') }}</a>
+                                </div>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/test') }}">{{ __('Scenes de films') }}</a>
+                            </li>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/PriseDeVues') }}">{{ __('Trouver un lieu de tournage') }}</a>
@@ -94,13 +100,13 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main >
             @yield('content')
         </main>
     </div>
     <div style="position: relative;right: 0;bottom: 0;left: 0;padding: 1rem;background-color: #efefef;text-align: center;">
         <footer class="footer-copyright text-center py-3">
-            <div id="copyright text-right">© Copyright 2019 CineMap  <a href="{{ url('/test') }}">{{ __('Contact') }}</a> </div>
+            <div id="copyright text-right">© Copyright 2019 CineMap <br> <a href="{{ url('/Contact') }}">{{ __('Contact') }}</a> <br> <a href="{{ url('/AboutUs') }}">{{ __('About Us') }}</a></div>
         </footer>
     </div>
     @stack('scripts')

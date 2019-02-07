@@ -13,7 +13,7 @@ class CreateCinPhotoTable extends Migration
      */
     public function up()
     {
-        Schema::create('photoscin', function (Blueprint $table) {
+        Schema::create('photosCin', function (Blueprint $table) {
             $table->increments('id');
             $table->string('photo_path');
             $table->integer('user_id')->unsigned();
@@ -21,7 +21,7 @@ class CreateCinPhotoTable extends Migration
             
         });
 
-        Schema::table('photoscin', function (Blueprint $table) {
+        Schema::table('photosCin', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('scene_id')->references('id')->on('scenes')->onDelete('cascade');
         });
@@ -34,6 +34,6 @@ class CreateCinPhotoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('photoscin');
+        Schema::dropIfExists('photosCin');
     }
 }

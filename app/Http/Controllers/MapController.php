@@ -25,10 +25,10 @@ class MapController extends Controller
 
         //$config['center']= '48.8534, 2.3488';
         
-        //$config['center']='auto';
+        $config['center']='auto';
         $config['zoom']= '10';
         $config['map_height']='500px';
-        $location = GeoIP::getLocation();
+        
 
         if($chemin){
             $config['directions'] = true;
@@ -37,6 +37,7 @@ class MapController extends Controller
             $config['directionsEnd'] = "auto";
             //$config['directionsDivID'] = "";
             //$ip = Request::ip();
+            $location = GeoIP::getLocation(); 
             $config['directionsWaypointArray'] = array();
             foreach ($scenes as $scene){
                 if(($scene['latitude']-1 < $location['lat']) && ($location['lat'] < $scene['latitude']+1) && ($scene['longitude']-1 < $location['lon']) && ($location['lon'] < $scene['longitude']+1)){
@@ -48,9 +49,6 @@ class MapController extends Controller
                 }
             }   
         }
-        $x = sprintf("%.3f", $location['lat']);
-        $y = sprintf("%.3f", $location['lon']);  
-        $config['center']= $x . ',' . $y;
         $config['scrollwheel']=true;
         //GMaps::initialize($config);
         $this->gmap->initialize($config);
