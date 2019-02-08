@@ -8,6 +8,7 @@ use FarhanWazir\GoogleMaps\GMaps;
 use Auth;
 use DB;
 use GeoIP;
+use App\Annonce;
 //use Request;
 
 class MapController extends Controller
@@ -129,7 +130,99 @@ class MapController extends Controller
 
         return $fiche;
     }
+
+    public function drawPublic()
+    {
+        $annonces = Annonce::all();
+
+        //$config['center']= '48.8534, 2.3488';
+        
+        $config['center']='auto';
+        $config['zoom']= '10';
+        $config['map_height']='500px';
+        $config['scrollwheel']=true;
+        //GMaps::initialize($config);
+        $this->gmap->initialize($config);
+        //$config['jsfile'] = asset('js/slider.js');
+        //$config['loadAsynchronously'] = true;
+        $path =  'https://googlemaps.github.io/js-marker-clusterer/images';
+        $this->gmap->cluster = true;
+        $this->gmap->clusterStyles =array( 
+            array( 
+               "url" => $path.'/m1.png' ,
+               "height" => 53, 
+               "width" => 53,
+           ), 
+           array( 
+               "url" =>$path. '/m2.png' ,
+               "height" => 56,  
+               "width" => 56, 
+           ), 
+           array( 
+              "url" => $path.'/m3.png' , 
+              "height" => 66, 
+              "width" => 66,
+           ),
+           array( 
+               "url" => $path.'/m4.png',
+               "height" => 78,  
+               "width" => 78,
+           ), 
+           array( 
+               "url" =>$path. '/m5.png',
+               "height" => 90,  
+               "width" => 90,
+           )
+       ); 
+         
+       /*$userid = Auth::user()->id;
+       $ids = DB::table('photoscin')->select('photo_path', 'scene_id')->where('user_id', '=', $userid)->get()->toArray();
+       $ids = json_decode(json_encode($ids), true);
+       $photo = array();
+       foreach($ids as $ide){
+            $photo[$ide['scene_id']] = $ide['photo_path'];
+       }*/
+        foreach ($annonces as $annonce){
+            //$a = (string)$scene->latitude;
+            //$b = (string)$scene->longitude; 
+            $address = $annonce['adresse'];
+            $address = str_replace(" ", "+", $address);
+            $geocode = file_get_contents('https://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false&key=AIzaSyBfiM2u64_uXCJix9FUFClwXDC_huQkmO0');
+            $output= json_decode($geocode);
+            $lat = $output->results[0]->geometry->location->lat;
+            $long = $output->results[0]->geometry->location->lng;
+            $marker['position'] = $lat . ',' . $long ; ; 
+            $marker['icon'] = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+            $marker['infowindow_content']= $this->drawFiche3($annonce['nom'], $annonce['description'], $annonce['path_to_dir'], $annonce['id']);
+            $this->gmap->add_marker($marker);
+        }
+        //$map = GMaps::create_map();
+        $map = $this->gmap->create_map();
+        //return view('base')->with('map', $map); 
+        return view('base', ['map' => $map]);
+    }
+
+    public function drawFiche3($nom, $description ,$pathdir, $id)
+    {
+        $fiche = '<h4>'. $nom .'</h4><p>'. $description .'</p>';
+        /*if($dossier = opendir($pathdir)){
+            while(false !== ($fichier = readdir($dossier))){
+                $fiche = $fiche . '<img src="'.$pathdir.$fichier .'" alt="Image not found" style="width:128px;height:128px;"/>';
+            }
+        }*/
+        foreach(glob(public_path('svg/images/').$pathdir.'/*') as $file) {
+            $file = str_replace("\\", "/", $file);
+            $file = str_replace("C:/laragon/www", "http://localhost/", $file);
+            $fiche = $fiche . '<img src="'.$file.'" alt="Image not found" style="width:128px;height:128px;"/>';
+            
+        }
+
+        $fiche = $fiche . '<a href='.url('/').'/reservation'.'/'.$id.' style="margin: 0 auto; width: 50%;"><button  type="button" class="btn btn-secondary">Reservation</button></a>';
+
+        return $fiche;
+    }
 }
 
 //'<h4>'.$scene['scene_title'].'</h4><br> <b> Film : </b>'. $scene['movie_title']. '<br> <b> Année : </b> ' . $scene['year'].' <br> <img src="'.$scene['photo_path'].'" alt="Image not found" style="width:128px;height:128px;"/>';
+
 

@@ -27,9 +27,21 @@ Route::get('/test', function () {
 Route::post('/create','LocInsertCtrl@insert')->name('create');
 Route::get('insert','LocInsertCtrl@insertform');
 
+
+Route::get('api/tags', 'Api\TagsController@index');
+
+// crud annonces 
 Route::get('proposer','AnnonceCtrl@getform');
 Route::post('/insert','AnnonceCtrl@insert')->name('insert');
-Route::get('api/tags', 'Api\TagsController@index');
+Route::get('mesannonces','AnnonceCtrl@myAnnonce')->name('mesannonces');
+Route::get('delete/{id}','AnnonceCtrl@destroy')->name('delete');
+Route::post('/update','AnnonceCtrl@update')->name('update');
+Route::get('modifier/{id}','AnnonceCtrl@modify')->name('modifier');
+
+Route::get('/annonces','SearchLieu@all')->name('annonces');
+Route::post('/research','SearchLieu@search')->name('research');
+Route::get('setdispo','DispoCtrl@getform');
+
 
 Auth::routes();
 
@@ -37,7 +49,12 @@ Route::get('/test', 'MapController@drawMarkers')->defaults('chemin', false)->nam
 
 Route::get('/test2', 'MapController@drawMarkers')->defaults('chemin', true)->name('test2');
 
+Route::get('/MapLieux', 'MapController@drawPublic')->defaults('chemin', false)->name('MapLieux');
+
 Route::get('/PriseDeVues', 'Pokedex@pokedex')->name('PriseDeVues');
+
+Route::post('/addphot','addphoto@add')->name('addphot');
+
 
 Route::get('/CreateTruc', function () {
     return view('testslider');

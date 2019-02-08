@@ -27,9 +27,9 @@ class LocInsertCtrl extends Controller
 
         $allowedfileExtension=['pdf','jpg','png'];
          $photo_name = $title.'_'.$scene;
-         
-         $request->file('photo')->move(public_path('images'),$photo_name ); // save photo in public
-         $full_path= public_path('images').$photo_name; // save the path and the name of the photo in the db
+         $extension = $request->file('photo')->extension();
+         $request->file('photo')->move(public_path('svg/images/'),$photo_name.'.'.$extension ); // save photo in public
+         $full_path= '/'.$photo_name.'.'.$extension; // save the path and the name of the photo in the db
         }
 
         

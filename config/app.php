@@ -229,6 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'GMaps' => FarhanWazir\GoogleMaps\Facades\GMapsFacade::class,
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+        
 
     ],
 

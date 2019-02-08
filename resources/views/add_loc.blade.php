@@ -67,8 +67,8 @@
   }, false);
 })();
 </script>
-<div style="padding:10px">
-    <div id="map"></div>
+<div style="padding:10px;  text-align: center;">
+    <div style="padding:10px; display: inline-block;" id="map"></div>
 </div>
 
 <script type="text/javascript">

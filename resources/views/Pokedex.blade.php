@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<p> Vous avez pris {{ $nbphoto }} scenes en photos parmis les {{ $nbscene }} scenes diponible</p>
 <div class="table-responsive">
 <table class="table">
   <thead>
@@ -18,6 +19,7 @@
       <td>{{ $poke["scene"] }}</td>
       <td>{{ $poke["year"] }}</td>
       <td>{!! html_entity_decode($poke["image"]) !!}</td>
+      <td>{!! html_entity_decode($poke["insert"]) !!}</td>
     </tr>
   @endforeach
   </tbody>

@@ -6,17 +6,13 @@ use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
 use Spatie\Tags\HasTags;
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
-// some code here 
-// and then 
-$app= App::getFacadeRoot();
-$app->make('tagqueue');
 
 class Annonce extends Model
 {       
-   
+    use HasTags;
+
     public static function boot()
     {
         parent::boot();
@@ -34,7 +30,6 @@ class Annonce extends Model
             $parser = new DocParser($environment);
             $htmlRenderer = new HtmlRenderer($environment);
             $text = $parser->parse($model->body);
-
             $model->html = $htmlRenderer->renderBlock($text);
            
             
@@ -42,6 +37,7 @@ class Annonce extends Model
 
             
         self::saved( function($model) {
+            
             $model->syncTags(app('tagqueue')->getTags());
 	    });
 
